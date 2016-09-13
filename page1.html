@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="jquery-latest.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+        .row {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">Projeto Secreto</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active"><a href="#">Links Fofinhos</a></li>
+                        <li><a href="page2.html">Umas música bem doida</a></li>
+                        <li><a href="page3.html">Coisas</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container -->
+        </nav>
+
+        <div id="reddit-content" class="container">
+            <div class="row">
+                <div id="item-0" class="col-md-6"></div>
+                <div id="item-1" class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div id="item-2" class="col-md-6"></div>
+                <div id="item-3" class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div id="item-4" class="col-md-6"></div>
+                <div id="item-5" class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div id="item-6" class="col-md-6"></div>
+                <div id="item-7" class="col-md-6"></div>
+            </div>
+            <div class="row">
+                <div id="item-8" class="col-md-6"></div>
+                <div id="item-9" class="col-md-6"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $.getJSON(
+                "https://www.reddit.com/r/aww.json?jsonp=?"
+                , function foo(data) {
+                    $.each(
+                        data.data.children.slice(0, 10)
+                        , function (i, post) {
+                            var item = $('#item-' + i);
+                            item = item.append('<a href="' + post.data.url + '" target="_blank"><img class="img-thumbnail" src="' + post.data.thumbnail + '" /></a>');
+                            item = item.append('<br>"<i>' + post.data.title + '"</i>');
+                        }
+                    )
+                }
+            )
+            .success(function () {
+                //alert("second success");
+            })
+            .error(function () {
+                $('#reddit-content').append('Tenta dar um F5 porque aparentemente CAIRDES. Se não rolar, chama o guetz...') //alert("error");
+            })
+            .complete(function () {
+                //alert("complete");
+            });
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+
+</html>
